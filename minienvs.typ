@@ -78,8 +78,12 @@
 
 #let minienvs(doc, config: auto) = {
   if config != auto {
-    // FIXME: dict update instead of overwrite
-    _config.update(x => config)
+    _config.update(x => {
+      for key in config.keys() {
+        x.insert(key, config.at(key))
+      }
+      return x
+    })
   }
 
   show figure.where(kind: "minienv"): _ => []
